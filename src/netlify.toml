@@ -1,0 +1,22 @@
+[[redirects]]
+  from = "/api/character"
+  to = "https://rickandmortyapi.com/api/character"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/location"
+  to = "https://rickandmortyapi.com/api/location"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/episode"
+  to = "https://rickandmortyapi.com/api/episode"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
