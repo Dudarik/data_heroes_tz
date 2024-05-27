@@ -30,4 +30,55 @@ const props = defineProps<IProps>();
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.card {
+  color: rgb(245, 245, 245);
+
+  display: flex;
+  gap: 1rem;
+  border-radius: 0.5rem;
+
+  width: 40rem;
+  height: 14rem;
+  background: rgb(60, 62, 68);
+
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+  overflow: hidden;
+
+  @media screen and (max-width: 700px) {
+    width: 80%;
+    height: 100%;
+
+    flex-direction: column;
+  }
+  .card_image {
+    display: flex;
+
+    img {
+      width: 100%;
+    }
+  }
+  .card_title {
+    margin: 0.5rem 0;
+  }
+
+  .card_content {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (max-width: 700px) {
+      padding: 0 1rem;
+    }
+    .card_section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      .section_title {
+        color: rgb(158, 158, 158);
+      }
+    }
+  }
+}
+</style>
