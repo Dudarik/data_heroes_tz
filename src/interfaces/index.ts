@@ -92,3 +92,12 @@ export interface Info<T> {
   };
   results?: T;
 }
+
+export interface ICard {
+  name: string;
+  image: string;
+  status: string;
+  species: string;
+  location: string;
+  episode: string;
+}

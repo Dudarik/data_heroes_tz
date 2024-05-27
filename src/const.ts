@@ -9,3 +9,12 @@ export const API_URL = import.meta.env.PROD
 export const API_URL_CHARACTER = `${API_URL}/character`;
 export const API_URL_LOCATION = `${API_URL}/location`;
 export const API_URL_EPISODE = `${API_URL}/episode`;
+
+export const RECORD_PER_PAGE = 20;
+
+export const statusFilterValues = [
+  { option: 'All', value: undefined },
+  { option: 'Alive', value: 'alive' },
+  { option: 'Dead', value: 'dead' },
+  { option: 'Unknown', value: 'unknown' },
+];

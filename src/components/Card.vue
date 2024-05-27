@@ -1,14 +1,7 @@
 <script setup lang="ts">
-interface IProps {
-  name: string;
-  image: string;
-  status: string;
-  species: string;
-  location: string;
-  episode: string;
-}
+import { ICard } from '@/interfaces';
 
-const props = defineProps<IProps>();
+const props = defineProps<ICard>();
 </script>
 
 <template>
