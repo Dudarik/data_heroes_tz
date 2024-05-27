@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// Можно продожить рефакторинг, вынести панель управления в отдельный компонент и эмитеть оттуда события, а в этом компоненте реагировать на них,
+// добавить обертку над тостами, с которой будет гораздо удобнее работать, да много чего еще можно сделать, но кому это надо?
+// Думаю, даже этот текст и этот код никто никогда смотреть не будет.
 import { useFetch, getEpisodeIdFromURL, getEpisodes, createUrl } from '@/lib/';
 import { Character, ICard, Info } from '@/interfaces';
 
@@ -8,6 +11,9 @@ import Button from 'primevue/button';
 import Paginator, { PageState } from 'primevue/paginator';
 import SelectButton from 'primevue/selectbutton';
 import InputText from 'primevue/inputtext';
+import Toast from 'primevue/toast';
+import { useToast } from 'primevue/usetoast';
+import FloatLabel from 'primevue/floatlabel';
 
 import {
   API_URL_CHARACTER,
@@ -15,6 +21,9 @@ import {
   statusFilterValues,
 } from '@/const';
 import { ref } from 'vue';
+import { onMounted } from 'vue';
+
+const toast = useToast();
 
 const totalRecords = ref(0);
 const firstRecord = ref(0);
@@ -63,9 +72,29 @@ const fetchCards = async (params?: {
         };
       });
   } catch (error) {
-    console.error(error);
+    const e = <Error>error;
+
+    cards.value = [];
+    totalRecords.value = 0;
+
+    toast.add({
+      severity: 'error',
+      summary: 'Fetch Error!',
+      detail: e.message,
+      life: 4000,
+    });
   }
 };
+
+onMounted(() => {
+  fetchCards({
+    page: firstRecord.value + 1,
+    filter: {
+      status: statusFilterValue.value,
+      name: nameFilterValue.value,
+    },
+  });
+});
 
 const onSelectPage = async (event: PageState) => {
   const { page } = event;
@@ -87,7 +116,7 @@ const onSubmit = async () => {
   firstRecord.value = 0;
 
   fetchCards({
-    page: firstRecord.value,
+    page: firstRecord.value + 1,
     filter: {
       status: statusFilterValue.value,
       name: nameFilterValue.value,
@@ -97,7 +126,7 @@ const onSubmit = async () => {
 </script>
 
 <template class="app">
-  <div class="control_panel">
+  <div class="control_panel mt-2">
     <SelectButton
       v-model="statusFilterValue"
       :options="statusFilterValues"
@@ -106,8 +135,12 @@ const onSubmit = async () => {
       dataKey="value"
       aria-labelledby="custom"
     />
-    <InputText type="text" v-model="nameFilterValue" />
-    <Button label="Submit" @click="onSubmit" />
+    <FloatLabel>
+      <InputText id="heroname" v-model="nameFilterValue" />
+      <label for="heroname">Имя героя</label>
+    </FloatLabel>
+    <!-- <InputText type="text" v-model="nameFilterValue" /> -->
+    <Button label="Применить" @click="onSubmit" />
   </div>
 
   <div class="cards">
@@ -122,6 +155,7 @@ const onSubmit = async () => {
     v-if="totalRecords > RECORD_PER_PAGE"
     class="mt-2"
   />
+  <Toast />
 </template>
 
 <style scoped lang="scss">

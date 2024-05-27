@@ -25,6 +25,8 @@ export interface IFetch<D> {
   error: Ref<Error | null>;
 }
 
+// Часть useFetch - с одного из проектов.
+
 export const useFetch = async <T, R>(
   options: IFetchOptions<T>
 ): Promise<IFetch<R>> => {
@@ -76,7 +78,9 @@ export const useFetch = async <T, R>(
     if (response.status !== OK) {
       const error = await response.json();
 
-      throw new Error(`${response.status}: ${response.statusText} (${error})`);
+      throw new Error(
+        `${response.status}: ${response.statusText} (${error.error})`
+      );
     }
     data.value = await response.json();
   } catch (err) {
