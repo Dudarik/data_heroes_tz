@@ -115,17 +115,19 @@ const onSubmit = async () => {
   </div>
   <Paginator
     :first="firstRecord"
-    @update:first="updateFirst"
     :rows="RECORD_PER_PAGE"
     :totalRecords="totalRecords"
+    @update:first="updateFirst"
     @page="onSelectPage"
     v-if="totalRecords > RECORD_PER_PAGE"
+    class="mt-2"
   />
 </template>
 
 <style scoped lang="scss">
 .control_panel {
   display: flex;
+  justify-content: center;
   gap: 1rem;
 }
 .cards {
@@ -133,7 +135,12 @@ const onSubmit = async () => {
   align-items: center;
   justify-content: center;
 
+  margin-top: 2rem;
+
   gap: 1rem;
   flex-wrap: wrap;
+}
+.mt-2 {
+  margin-top: 2rem;
 }
 </style>
